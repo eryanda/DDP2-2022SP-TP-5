@@ -104,11 +104,14 @@ public class ShyourBox {
                 if(choice == 1){
                     return product;
                 }
-                System.out.println("\n[" + product.getClass().getSimpleName() + "]");
-                System.out.println("Nama Produk: " + product.getNama());
-                System.out.println("Harga: " + product.getPrice());
-                System.out.println("Stok: " + product.getStock());
-                return product;
+                if(product.getClass().getSimpleName().equals("Fruit")){
+                    Fruit product2 = new Fruit(name, choice, choice, false);
+                    System.out.println("\n[" + "Buah " + (product2.isLocal() ? "Lokal" : "Impor") + "]");
+                    System.out.println("Nama Produk: " + product.getNama());
+                    System.out.println("Harga: " + product.getPrice());
+                    System.out.println("Stok: " + product.getStock());
+                    return product;
+                }
             }
         }
         return null;
