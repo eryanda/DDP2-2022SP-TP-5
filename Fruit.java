@@ -1,14 +1,29 @@
+/**
+ * Representasi produk buah.
+ */
 public class Fruit extends Product {
     // Atribut spesifik untuk kelas Fruit
-    private boolean isLocal; // Merupakan sebuah penanda apakah buah tersebut merupakan produk lokal atau bukan.
+    private boolean isLocal; // Merupakan penanda apakah buah tersebut merupakan produk lokal atau impor.
 
-    // Konstruktor untuk kelas Fruit
+    /**
+     * Konstruktor untuk kelas Fruit.
+     *
+     * @param nama     Nama produk buah.
+     * @param price    Harga produk buah.
+     * @param stock    Jumlah stok produk buah.
+     * @param isLocal  Status penanda apakah buah merupakan produk lokal atau impor.
+     */
     public Fruit(String nama, int price, int stock, boolean isLocal) {
         super(nama, price, stock);
         this.isLocal = isLocal;
     }
 
-    // Method untuk memeriksa dan memberikan diskon berdasarkan kuantitas dan status lokal atau impor
+    /**
+     * Menghitung dan mengembalikan persentase diskon berdasarkan jumlah pembelian dan status lokal atau impor.
+     *
+     * @param quantity Jumlah pembelian buah.
+     * @return Persentase diskon berdasarkan jumlah pembelian dan status lokal atau impor.
+     */
     @Override
     public int checkDiscount(int quantity) {
         if (isLocal) {
@@ -27,11 +42,20 @@ public class Fruit extends Product {
         return 0; // Tidak ada diskon jika kuantitas tidak mencukupi
     }
 
-    // Getter dan Setter untuk atribut isLocal
+    /**
+     * Mengembalikan status apakah buah merupakan produk lokal atau impor.
+     *
+     * @return true jika buah merupakan produk lokal, false jika buah merupakan produk impor.
+     */
     public boolean isLocal() {
         return isLocal;
     }
 
+    /**
+     * Mengatur status apakah buah merupakan produk lokal atau impor.
+     *
+     * @param local true jika buah merupakan produk lokal, false jika buah merupakan produk impor.
+     */
     public void setLocal(boolean local) {
         isLocal = local;
     }

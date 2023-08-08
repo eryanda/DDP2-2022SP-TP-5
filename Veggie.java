@@ -1,13 +1,29 @@
+/**
+ * Kelas Veggie merepresentasikan produk sayuran.
+ */
 public class Veggie extends Product {
     // Atribut spesifik untuk kelas Veggie
     private boolean isOrganic; // Merupakan sebuah penanda apakah sayuran tersebut merupakan produk organik atau bukan.
 
-    // Konstruktor untuk kelas Veggie
+    /**
+     * Konstruktor untuk kelas Veggie.
+     *
+     * @param nama      Nama produk sayuran.
+     * @param price     Harga produk sayuran.
+     * @param stock     Stok produk sayuran.
+     * @param isOrganic Status produk organik atau non-organik.
+     */
     public Veggie(String nama, int price, int stock, boolean isOrganic) {
         super(nama, price, stock);
         this.isOrganic = isOrganic;
     }
 
+    /**
+     * Memeriksa dan memberikan diskon berdasarkan kuantitas dan status organik atau non-organik.
+     *
+     * @param quantity Kuantitas pembelian.
+     * @return Persentase diskon yang diberikan.
+     */
     // Method untuk memeriksa dan memberikan diskon berdasarkan kuantitas dan status organik atau non-organik
     @Override
     public int checkDiscount(int quantity) {
@@ -27,11 +43,20 @@ public class Veggie extends Product {
         return 0; // Tidak ada diskon jika kuantitas tidak mencukupi
     }
 
-    // Getter dan Setter untuk atribut isOrganic
+    /**
+     * Mendapatkan status produk organik atau non-organik.
+     *
+     * @return True jika produk organik, false jika produk non-organik.
+     */
     public boolean isOrganic() {
         return isOrganic;
     }
 
+    /**
+     * Mengatur status produk organik atau non-organik.
+     *
+     * @param organic True jika produk organik, false jika produk non-organik.
+     */
     public void setOrganic(boolean organic) {
         isOrganic = organic;
     }

@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Aplikasi ShyourBox untuk manajemen pembelian produk dan pembuatan struk.
+ */
 public class ShyourBox {
     private List<Product> products = new ArrayList<>();
     private List<Cart> carts = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
 
+    /**
+     * Method utama untuk menjalankan aplikasi ShyourBox.
+     *
+     * @param args Argumen baris perintah (tidak digunakan dalam aplikasi ini).
+     */
     public static void main(String[] args) {
         ShyourBox shyourboxApp = new ShyourBox();
         System.out.println("Welcome to ShyourBox! Yuk beli jangan shy shy!");
@@ -55,6 +63,11 @@ public class ShyourBox {
         scanner.close();
     }
 
+    /**
+     * Memproses pembelian produk oleh customer.
+     *
+     * @param scanner Scanner untuk input dari pengguna.
+     */
     public void buyProduct(Scanner scanner) {
         System.out.print("Masukkan nama customer: ");
         String customerName = scanner.nextLine();
@@ -98,6 +111,13 @@ public class ShyourBox {
         System.out.println("Terima kasih sudah berbelanja, " + customerName + "!");
     }
 
+    /**
+     * Mencari produk berdasarkan nama.
+     *
+     * @param name   Nama produk yang dicari.
+     * @param choice Pilihan fitur yang digunakan.
+     * @return Produk yang ditemukan atau null jika tidak ditemukan.
+     */
     public Product searchProduct(String name, int choice) {
         for (Product product : products) {
             if (product.getNama().equalsIgnoreCase(name)) {
@@ -105,18 +125,32 @@ public class ShyourBox {
                     return product;
                 }
                 if(product.getClass().getSimpleName().equals("Fruit")){
-                    Fruit product2 = new Fruit(name, choice, choice, false);
-                    System.out.println("\n[" + "Buah " + (product2.isLocal() ? "Lokal" : "Impor") + "]");
+                    Fruit fruit = (Fruit) product;
+                    System.out.println("\n[" + "Buah " + (fruit.isLocal() ? "Lokal" : "Impor") + "]");
                     System.out.println("Nama Produk: " + product.getNama());
                     System.out.println("Harga: " + product.getPrice());
                     System.out.println("Stok: " + product.getStock());
                     return product;
                 }
-            }
+                else if (product.getClass().getSimpleName().equals("Veggie")){
+                    Veggie veggie = (Veggie) product;
+                    System.out.println("\n[" + "Sayur " + (veggie.isOrganic() ? "Organik" : "Konvensional") + "]");
+                    System.out.println("Nama Produk: " + product.getNama());
+                    System.out.println("Harga: " + product.getPrice());
+                    System.out.println("Stok: " + product.getStock());
+                    return product;
+                }
+            } 
         }
+        System.out.println("Produk tersebut tidak ada");
         return null;
     }
 
+    /**
+     * Menambahkan produk dari file txt ke dalam daftar produk.
+     *
+     * @param fileAddress Alamat file produk.
+     */
     public void addProduct(String fileAddress) {
         try {
             Scanner fileScanner = new Scanner(new java.io.File(fileAddress));
@@ -159,6 +193,11 @@ public class ShyourBox {
         }
     }
 
+     /**
+     * Menambahkan customer dari file txt ke dalam daftar customer.
+     *
+     * @param fileAddress Alamat file customer.
+     */
     public void addCustomer(String fileAddress) {
         try {
             Scanner fileScanner = new Scanner(new java.io.File(fileAddress));
@@ -192,6 +231,9 @@ public class ShyourBox {
         }
     }
 
+    /**
+     * Mencetak struk perbelanjaan ke dalam file txt.
+     */
     public void printReceipt() {
         try {
             FileWriter writer = new FileWriter("Struk.txt");
@@ -201,15 +243,15 @@ public class ShyourBox {
                 writer.write("=============================\n");
                 writer.write("Nama Customer: " + customer.getName() + "\n");
                 writer.write("Daftar Belanja:\n");
-                int total = 0;
                 for (OrderItem orderItem : cart.getOrderList()) {
                     Product product = orderItem.getProduct();
                     int quantity = orderItem.getQuantity();
                     int finalPrice = orderItem.getFinalPrice();
-                    total += finalPrice;
+
                     writer.write(product.getNama() + "  " + quantity + "kg  " + finalPrice + "\n");
                 }
-                writer.write("\nTotal Perbelanjaan: " + total + "\n");
+                int totalPrice = cart.calculateTotalPrice();
+                writer.write("\nTotal Perbelanjaan: " + totalPrice + "\n");
             }
             writer.close();
             System.out.println("Struk telah disimpan dalam file Struk.txt");
@@ -218,7 +260,13 @@ public class ShyourBox {
         }
     }
 
-    private Customer findCustomer(String name) {
+    /**
+     * Mencari customer berdasarkan nama.
+     *
+     * @param name Nama customer yang dicari.
+     * @return Customer yang ditemukan atau null jika tidak ditemukan.
+     */
+    public Customer findCustomer(String name) {
         for (Customer customer : customers) {
             if (customer.getName().equalsIgnoreCase(name)) {
                 return customer;
